@@ -88,7 +88,208 @@
             <section id="writing-app">
                 <div class="container">
                     <h3>Writing your own app</h3>
-                    <p></p>
+                    <section>
+                        <h4>Setup</h4>
+                        <ul>
+                            <li>npm init</li>
+                            <li>npm install bcrypt-nodejs body-parser connect-flash cookie-parser ejs express express-session method-override mongoose morgan passport passport-local passport-facebook passport-google-oauth passport-local passport-twitter --save</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h4>Configuration Files</h4>
+                        <h5>/config/auth.js</h5>
+                        <pre><code>
+// expose our config directly to our application using module.exports
+module.exports = {};
+						</code></pre>
+                        <h5>/config/database.js</h5>
+                        <pre><code>
+module.exports = {
+	'url': 'mongodb://localhost/node-passport'
+}
+						</code></pre>
+                        <h5>/config/passport.js</h5>
+                        <pre><code>
+module.exports = function(passport) {}
+						</code></pre>
+                        <h5>/app/routes.js</h5>
+                        <pre><code>
+module.exports = function(passport) {}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h4>Index.js</h4>
+                        <pre><code>
+//libraries required
+//express framework
+var express = require('express');
+var app = express();
+//mongo connector
+var mongoose = require('mongoose');
+//Passport
+var passport = require('passport');
+//Flash messages stored in session
+var flash = require('connect-flash');
+//log request to the log
+var morgan = require('morgan');
+//read cookies
+var cookieParser = require('cookie-parser');
+//get information from html forms
+var bodyParser = require('body-parser');
+//session
+var session = require('express-session');
+
+var PORT = process.env.PORT || 8080;
+
+
+//database
+var databaseConfig = require('./config/database.js');
+mongoose.connect(databaseConfig.url);
+
+//passport
+require('./config/passport')(passport);
+
+
+//APP use
+app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); //Returns middleware that only parses urlencoded bodies. This parser accepts only UTF-8 encoding of the body and supports automatic inflation of gzip and deflate encodings.
+
+//setup view
+app.set('view engine', 'ejs');
+
+//session setup
+app.use(session({ secret: 'avenuecode-passport-training', resave: true, saveUninitialized: false }));
+//secret - This is the secret used to sign the session ID cookie
+//resave - Forces the session to be saved back to the session store, even if the session was never modified during the request. 
+//saveUninitialized - Forces a session that is "uninitialized" to be saved to the store.
+//https://www.npmjs.com/package/express-session
+
+
+//passport setup
+app.use(passport.initialize());
+app.use(passport.session());
+
+//flash message setup
+app.use(flash());
+
+//routes
+require('./app/routes.js')(app, passport);
+
+//listen to port
+app.listen(PORT, function() {
+    console.log("Open your browser at http://localhost:" + PORT);
+});
+
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h4>Starting Server</h4>
+                        <pre><code>$ mongod --dbpath ~/path/to/folder</code></pre>
+                        <pre><code>$ node index  #nodemon index.js (npm install nodemon -g)</code></pre>
+                    </section>
+                    <section>
+                        <h4>Model</h4>
+                        <h5>/app/models/user.js</h5>
+                        <pre><code>
+
+
+// load the things we need
+var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt-nodejs');
+
+// define the schema for our user model
+var userSchema = mongoose.Schema({
+
+    local            : {
+        email        : String,
+        password     : String
+    },
+    facebook         : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    },
+    twitter          : {
+        id           : String,
+        token        : String,
+        displayName  : String,
+        username     : String
+    },
+    google           : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    }
+
+});
+
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
+
+// create the model for users and expose it to our app
+module.exports = mongoose.model('User', userSchema);
+
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h4>Views</h4>
+                    </section>
+                    <section>
+                        <h4>Render</h4>
+                    </section>
+                    <section>
+                        <h4>Local Signup</h4>
+                    </section>
+                    <section>
+                        <h4>Local Login</h4>
+                    </section>
+                    <section>
+                        <h4>Profile</h4>
+                    </section>
+                    <section>
+                        <h4>Logout</h4>
+                    </section>
+                    <section>
+                        <h4>Facebook</h4>
+                    </section>
+                    <section>
+                        <h4>Twitter</h4>
+                    </section>
+                    <section>
+                        <h4>Google</h4>
+                    </section>
+                    <section>
+                        <h4>Link Accounts</h4>
+                    </section>
+                    <section>
+                        <h4>Local</h4>
+                    </section>
+                    <section>
+                        <h4>Facebook</h4>
+                    </section>
+                    <section>
+                        <h4>Twitter</h4>
+                    </section>
+                    <section>
+                        <h4>Google</h4>
+                    </section>
+                    <section>
+                        <h4>Unlink Accounts</h4>
+                    </section>
+                    <section>
+                        <h4>End</h4>
+                    </section>
                 </div>
             </section>
         </div>
