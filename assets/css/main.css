@@ -1587,7 +1587,7 @@
 	}
 
 	p {
-		margin: 0 0 2.25em 0;
+		margin: 0 0 1em 0;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -3064,4 +3064,9 @@
 		padding-bottom: 50px;
 		border-bottom: 10px solid #4ACAA8;
 		margin-bottom: 100px;
+	}
+
+	i{
+		text-decoration: underline;
+		font-weight: bold;
 	}

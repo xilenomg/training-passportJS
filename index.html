@@ -29,7 +29,9 @@
                 <li><a href="#passportjs">PassportJS</a></li>
                 <li><a href="#oauth">OAuth</a></li>
                 <li><a href="#demo">Demo</a></li>
+                <li><a href="#install">Installation</a></li>
                 <li><a href="#writing-app">Writing your own app</a></li>
+                <li><a href="#exercise">Exercise</a></li>
             </ul>
         </nav>
         <footer>
@@ -77,7 +79,6 @@
                         </ul>
                         <p>Facebook, Google and Twitter implement the OAuth standard for authorization, which we will take a look in the next section.</p>
                     </section>
-                    <p></p>
                 </div>
             </section>
             <!-- Three -->
@@ -98,9 +99,15 @@
                             <li>Authorization server</li>
                         </ul>
                         <ol>
-                            <li><strong>Resource owner:</strong> User<p>The resource owner is the user who authorizes an application to access their account. The application's access to the user's account is limited to the "scope" of the authorization granted (e.g. read or write access).</p></li>
-                            <li><strong>Client:</strong> Application<p>The client is the application that wants to access the user's account. Before it may do so, it must be authorized by the user, and the authorization must be validated by the API.</p></li>
-                            <li><strong>Resource server/Authorization server:</strong> API<p>The resource server hosts the protected user accounts, and the authorization server verifies the identity of the user then issues access tokens to the application. From an application developer's point of view, a service's API fulfills both the resource and authorization server roles.</p></li>
+                            <li><strong>Resource owner:</strong> User
+                                <p>The resource owner is the user who authorizes an application to access their account. The application's access to the user's account is limited to the "scope" of the authorization granted (e.g. read or write access).</p>
+                            </li>
+                            <li><strong>Client:</strong> Application
+                                <p>The client is the application that wants to access the user's account. Before it may do so, it must be authorized by the user, and the authorization must be validated by the API.</p>
+                            </li>
+                            <li><strong>Resource server/Authorization server:</strong> API
+                                <p>The resource server hosts the protected user accounts, and the authorization server verifies the identity of the user then issues access tokens to the application. From an application developer's point of view, a service's API fulfills both the resource and authorization server roles.</p>
+                            </li>
                         </ol>
                     </section>
                     <section>
@@ -120,7 +127,6 @@
                     </section>
                 </div>
             </section>
-
             <!-- Four -->
             <section id="demo">
                 <div class="container">
@@ -136,44 +142,67 @@
                     </video>
                 </div>
             </section>
+            <section id="install">
+                <div class="container">
+                    <h3>Installation</h3>
+                    <h4>Install node</h4>
+                    <p>https://nodejs.org/en/download/</p>
+                    <h4>Install Mongo</h4>
+                    <p>https://docs.mongodb.org/manual/installation/</p>
+                </div>
+            </section>
             <!-- Five -->
             <section id="writing-app">
                 <div class="container">
                     <h3>Writing your own app</h3>
                     <section>
                         <h3>Setup</h3>
+                        <p>Open your terminal and let's start creating our app. <i>npm init</i> will start a node application. It will ask you few questions about your project. Later, we will install all required libraries with <i>npm install</i></p>
                         <ul>
-                            <li>npm init</li>
-                            <li>npm install bcrypt-nodejs body-parser connect-flash cookie-parser ejs express express-session method-override mongoose morgan passport passport-local passport-facebook passport-google-oauth passport-local passport-twitter --save</li>
+                            <li><pre><code>npm init</code></pre></li>
+                            <li><pre><code>npm install bcrypt-nodejs body-parser connect-flash cookie-parser ejs express express-session method-override mongoose morgan passport passport-local passport-facebook passport-google-oauth passport-twitter --save</code></pre></li>
+                        </ul>
+                        <p>What are those libraries?</p>
+                        <ul>
+                            <li><i>bcrypt-nodejs: </i>Lib to help you hash passwords</li>
+                            <li><i>body-parser: </i> body parsing middleware.</li>
+                            <li><i>connect-flash: </i>Flash messages are stored in the session</li>
+                            <li><i>cookie-parser: </i>Parse Cookie header and populate req.cookies with an object keyed by the cookie names</li>
+                            <li><i>ejs: </i>EJS combines data and a template to produce HTML. </li>
+                            <li><i>express: </i>web framework for Node.js</li>
+                            <li><i>express-session: </i>Session middleware</li>
+                            <li><i>method-override: </i>Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.</li>
+                            <li><i>mongoose: </i>MongoDB object modeling tool designed to work in an asynchronous environment</li>
+                            <li><i>morgan: </i>HTTP request logger middleware for node.js</li>
+                            <li><i>passport: </i>Passport is authentication middleware for Node.js</li>
+                            <li><i>passport-local: </i>Passport strategy for authenticating with a username and password.</li>
+                            <li><i>passport-facebook: </i>Passport strategy for authenticating with Facebook using the OAuth 2.0 API.</li>
+                            <li><i>passport-google-oauth: </i>Passport strategies for authenticating with Google using OAuth 1.0a and OAuth 2.0.</li>
+                            <li><i>passport-twitter: </i>Passport strategy for authenticating with Twitter using the OAuth 1.0a API.</li>
                         </ul>
                     </section>
                     <section>
                         <h3>Configuration Files</h3>
                         <h4>/config/auth.js</h4>
-                        <pre><code>
-// expose our config directly to our application using module.exports
-module.exports = {};
-						</code></pre>
+                        <p>We will use this file to store all apps keys that we will use on our app</p>
+                        <pre><code>// expose our config directly to our application using module.exports
+module.exports = {};</code></pre>
                         <h4>/config/database.js</h4>
-                        <pre><code>
-module.exports = {
+                        <p>MongoDB Info comes here</p>
+                        <pre><code>module.exports = {
 	'url': 'mongodb://localhost/node-passport'
-}
-						</code></pre>
+}</code></pre>
                         <h4>/config/passport.js</h4>
-                        <pre><code>
-module.exports = function(passport) {}
-						</code></pre>
+                        <p>In this file we will write all passport configuration.</p>
+                        <pre><code>module.exports = function(passport) {}</code></pre>
                         <h4>/app/routes.js</h4>
-                        <pre><code>
-module.exports = function(passport) {}
-                        </code></pre>
+                        <p>File responsible for all routes</p>
+                        <pre><code>module.exports = function(app, passport) {}</code></pre>
                     </section>
                     <section>
                         <h3>Index.js</h3>
-                        <pre><code>
-//libraries required
-//express framework
+                        <p>//libraries required</p>
+                        <pre><code>//express framework
 var express = require('express');
 var app = express();
 //mongo connector
@@ -190,44 +219,70 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 //session
 var session = require('express-session');
+</code></pre>
 
-var PORT = process.env.PORT || 8080;
 
-//database
-var databaseConfig = require('./config/database.js');
+<p>For Heroku apps we use process.env.PORT or we can force 8080 for devs</p>
+<pre><code>var PORT = process.env.PORT || 8080;</code></pre>
+
+
+<p>//database</p>
+<pre><code>var databaseConfig = require('./config/database.js');
 mongoose.connect(databaseConfig.url);
+</code></pre>
 
-//passport
-require('./config/passport')(passport);
 
-//APP use
+
+<p>//passport</p>
+<pre><code>require('./config/passport')(passport);
+</code></pre>
+
+
+
+<p>//APP use</p>
+<pre><code>
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); //Returns middleware that only parses urlencoded bodies. This parser accepts only UTF-8 encoding of the body and supports automatic inflation of gzip and deflate encodings.
+</code></pre>
 
-//setup view
+
+
+<p>//setup view</p>
+<pre><code>
 app.set('view engine', 'ejs');
+</code></pre>
 
-//session setup
-app.use(session({ secret: 'avenuecode-passport-training', resave: true, saveUninitialized: false }));
+
+
+<p>//session setup</p>
+<pre><code>app.use(session({ secret: 'avenuecode-passport-training', resave: true, saveUninitialized: false }));
 //secret - This is the secret used to sign the session ID cookie
 //resave - Forces the session to be saved back to the session store, even if the session was never modified during the request. 
 //saveUninitialized - Forces a session that is "uninitialized" to be saved to the store.
-//https://www.npmjs.com/package/express-session
+//https://www.npmjs.com/package/express-session</code></pre>
 
-//passport setup
-app.use(passport.initialize());
-app.use(passport.session());
 
-//flash message setup
-app.use(flash());
 
-//routes
-require('./app/routes.js')(app, passport);
+<p>//passport setup</p>
+<pre><code>app.use(passport.initialize());
+app.use(passport.session());</code></pre>
 
-//listen to port
-app.listen(PORT, function() {
+
+
+<p>//flash message setup</p>
+<pre><code>app.use(flash());</code></pre>
+
+
+
+<p>//routes</p>
+<pre><code>require('./app/routes.js')(app, passport);</code></pre>
+
+
+
+<p>//listen to port</p>
+<pre><code>app.listen(PORT, function() {
     console.log("Open your browser at http://localhost:" + PORT);
 });</code></pre>
                     </section>
@@ -242,9 +297,10 @@ app.listen(PORT, function() {
                         <pre><code>// load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+</code></pre>
 
-// define the schema for our user model
-var userSchema = mongoose.Schema({
+<p>// define the schema for our user model</p>
+<pre><code>var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String
@@ -268,25 +324,26 @@ var userSchema = mongoose.Schema({
         name         : String
     }
 });
+</code></pre>
 
-// generating a hash
-userSchema.methods.generateHash = function(password) {
+<p>// generating a hash for password</p>
+<pre><code>userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
+};</code></pre>
 
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
+<p>// checking if password is valid</p>
+<pre><code>userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
-};
+};</code></pre>
 
-// create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+<p>// create the model for users and expose it to our app</p>
+<pre><code>module.exports = mongoose.model('User', userSchema);</code></pre>
 
-                        </code></pre>
                     </section>
                     <section>
                         <h3>Views</h3>
                         <h4>/views/header.ejs</h4>
+                        <p>This file will be attached on the top of all views, since it's the header</p>
                         <pre><code>
 &lt;!Doctype html&gt;
 &lt;html&gt;
@@ -305,11 +362,13 @@ module.exports = mongoose.model('User', userSchema);
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
 </code></pre>
                         <h4>/views/footer.ejs</h4>
+                        <p>This file will be attached at the bottom of all views, since it's the footer</p>
                         <pre><code>    &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
                         <h4>/views/index.ejs</h4>
+                        <p>Start Page. Where our users will start on our app</p>
                         <pre><code>&lt;% include header %&gt;
 &lt;% include footer %&gt;
 </code></pre>
@@ -317,6 +376,7 @@ module.exports = mongoose.model('User', userSchema);
                     <section>
                         <h3>Render</h3>
                         <h4>/app/routes.js</h4>
+                        <p>We will render Index page for the user</p>
                         <pre><code>var express = require('express');
 var appRouter = express.Router();
 
@@ -567,8 +627,7 @@ passport.use('local-login', new LocalStrategy({
 });
 
 </code></pre>
-
-<pre><code>//middleware that will verify whether user is logged in
+                        <pre><code>//middleware that will verify whether user is logged in
 var isLoggedIn = function(request, response, next) {
     if (request.isAuthenticated()) {
         return next();
@@ -579,10 +638,8 @@ var isLoggedIn = function(request, response, next) {
                     </section>
                     <section>
                         <h3>Logout</h3>
-
                         <h4>/views/profile.ejs</h4>
                         <pre><code>&lt;a href=&quot;/logout&quot; class=&quot;btn btn-default btn-sm&quot;&gt;Logout&lt;/a&gt;</code></pre>
-
                         <h4>/app/routes.js</h4>
                         <pre><code>appRouter.get('/logout', function(request, response) {
     request.logout();
@@ -593,18 +650,17 @@ var isLoggedIn = function(request, response, next) {
                         <h3>Facebook</h3>
                         <h4>/views/home.ejs</h4>
 <pre><code>&lt;a href=&quot;/auth/facebook&quot; class=&quot;btn btn-primary&quot;&gt;&lt;span class=&quot;fa fa-facebook&quot;&gt;&lt;/span&gt; Facebook&lt;/a&gt;</code></pre>
-							
-						<a target="_blank" href="https://developers.facebook.com/">https://developers.facebook.com/</a><br /><br />
-
-						<h4>/config/auth.js</h4>
-						<pre><code>'facebookAuth': {
+                        <a target="_blank" href="https://developers.facebook.com/">https://developers.facebook.com/</a>
+                        <br />
+                        <br />
+                        <h4>/config/auth.js</h4>
+                        <pre><code>'facebookAuth': {
     'clientID': '1675914896001421',
     'clientSecret': '7fe0217711792f908161a1efb4711842',
     'callbackURL': 'http://localhost:8080/auth/facebook/callback'
 }</code></pre>
-
-<h4>/app/routes.js</h4>
-<pre><code>var authRouter = express.Router();
+                        <h4>/app/routes.js</h4>
+                        <pre><code>var authRouter = express.Router();
 
 module.exports ...
 //facebook
@@ -616,10 +672,9 @@ authRouter.get('/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/'
 }));
 app.use('/auth', authRouter);</code></pre>
-
-<h4>/app/routes.js</h4>
-<pre><code>var FacebookStrategy = require('passport-facebook').Strategy;</code></pre>
-<pre><code>//facebook
+                        <h4>/app/routes.js</h4>
+                        <pre><code>var FacebookStrategy = require('passport-facebook').Strategy;</code></pre>
+                        <pre><code>//facebook
 passport.use(new FacebookStrategy({
         clientID: configAuth.facebookAuth.clientID,
         clientSecret: configAuth.facebookAuth.clientSecret,
@@ -668,9 +723,8 @@ passport.use(new FacebookStrategy({
             }
         });
     }));</code></pre>
-
-<h4>views/profile.ejs</h4>
-    <pre><code>&lt;!-- FACEBOOK INFORMATION --&gt;
+                        <h4>views/profile.ejs</h4>
+                        <pre><code>&lt;!-- FACEBOOK INFORMATION --&gt;
 &lt;div class=&quot;col-sm-6&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3 class=&quot;text-primary&quot;&gt;&lt;span class=&quot;fa fa-facebook&quot;&gt;&lt;/span&gt; Facebook&lt;/h3&gt;
@@ -690,9 +744,9 @@ passport.use(new FacebookStrategy({
                         <h3>Twitter</h3>
                         <h4>/views/index.ejs</h4>
                         <pre><code>&lt;a href=&quot;/auth/twitter&quot; class=&quot;btn btn-info&quot;&gt;&lt;span class=&quot;fa fa-twitter&quot;&gt;&lt;/span&gt; Twitter&lt;/a&gt;</code></pre>
-
-                        <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a><br /><br />
-
+                        <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a>
+                        <br />
+                        <br />
                         <h4>/config/auth.js</h4>
                         <pre><code>//https://dev.twitter.com/
 'twitterAuth': {
@@ -700,8 +754,6 @@ passport.use(new FacebookStrategy({
     'consumerSecret': 'ZdoOupziT1PIJykk6iPLMM3ud8yBlgg3Wxp7GVMU4UAMvHKqU3',
     'callbackURL': 'http://localhost:8080/auth/twitter/callback'
 },</code></pre>
-                        
-
                         <h4>/app/routes.js</h4>
                         <pre><code>//twitter
 authRouter.get('/twitter', passport.authenticate('twitter', { scope: 'email' }));
@@ -710,8 +762,6 @@ authRouter.get('/twitter/callback', passport.authenticate('twitter', {
     successRedirect: '/profile',
     failureRedirect: '/'
 }));</code></pre>
-
-
                         <h4>/config/passport.js</h4>
                         <pre><code>var TwitterStrategy = require('passport-twitter').Strategy;</code></pre>
                         <pre><code>//twitter
@@ -762,9 +812,8 @@ passport.use(new TwitterStrategy({
             } 
         });
     }));</code></pre>
-
-    <h4>/views/profile.ejs</h4>
-    <pre><code>&lt;div class=&quot;row&quot;&gt;
+                        <h4>/views/profile.ejs</h4>
+                        <pre><code>&lt;div class=&quot;row&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- TWITTER INFORMATION --&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-sm-6&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
@@ -785,10 +834,9 @@ passport.use(new TwitterStrategy({
                         <h3>Google</h3>
                         <h4>/views/index.ejs</h4>
                         <pre><code>&lt;a href=&quot;/auth/google&quot; class=&quot;btn btn-danger&quot;&gt;&lt;span class=&quot;fa fa-google-plus&quot;&gt;&lt;/span&gt; Google+&lt;/a&gt;</code></pre>
-
-                          <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a><br /><br />
-
-
+                        <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a>
+                        <br />
+                        <br />
                         <h4>/config/auth.js</h4>
                         <pre><code>//console.developer.google.com or https://console.cloud.google.com
 'googleAuth': {
@@ -796,8 +844,6 @@ passport.use(new TwitterStrategy({
     'clientSecret': 'r8wDnKBQfnAP9LvmZG4cJQ87',
     'callbackURL': 'http://localhost:8080/auth/google/callback'
 }</code></pre>
-
-                        
                         <h4>/app/routes.js</h4>
                         <pre><code>//google
 authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -806,11 +852,8 @@ authRouter.get('/google/callback', passport.authenticate('google', {
     successRedirect: '/profile',
     failureRedirect: '/'
 }));</code></pre>
-
-                        
                         <h4>/config/passport.js</h4>
                         <pre><code>var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;</code></pre>
-                        
                         <pre><code>//Google
 passport.use(new GoogleStrategy({
     clientID        : configAuth.googleAuth.clientID,
@@ -857,9 +900,6 @@ function(request, token, refreshToken, profile, done) {
         }
     });
 }));</code></pre>
-
-
-
                         <h4>/views/profile.js</h4>
                         <pre><code>&lt;!-- GOOGLE INFORMATION --&gt;
 &lt;div class=&quot;col-sm-6&quot;&gt;
@@ -876,20 +916,14 @@ function(request, token, refreshToken, profile, done) {
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
                     </section>
-                    
-
-
                     <section>
                         <h3>Link Account Local</h3>
                         <h4>/views/profile.js</h4>
                         <pre><code><% } else { %>
     &lt;a href=&quot;/connect/local&quot; class=&quot;btn btn-default&quot;&gt;Connect Local&lt;/a&gt;
 <% } %></code></pre>
-
-
                         <h4>/app/routes.js</h4>
                         <pre><code>var connectRouter = express.Router();</code></pre>
-
                         <pre><code>//local
 connectRouter.get('/local', function(request, response) {
     response.render('connect-local.ejs', { message: request.flash('loginMessage') });
@@ -902,8 +936,6 @@ connectRouter.post('/local', passport.authenticate('local-signup', {
 
 app.use('/connect', connectRouter);
 </code></pre>
-
-
                         <h4>/config/passport.js</h4>
                         <pre><code>else if (!request.user.local.email) {
     //let's check if the email used to connect a local account is being used by another user
@@ -929,8 +961,6 @@ app.use('/connect', connectRouter);
         }
     });
 }</code></pre>
-
-
                         <h4>/views/connect-local.ejs</h4>
                         <pre><code>
 &lt;% include header %&gt;
@@ -953,18 +983,14 @@ app.use('/connect', connectRouter);
 &lt;hr&gt;
 &lt;p&gt;&lt;a href=&quot;/profile&quot;&gt;Go back to profile&lt;/a&gt;&lt;/p&gt;
 &lt;% include footer %&gt;</code></pre>
-
                     </section>
                     <section>
                         <h3>Link Account Facebook</h3>
-
                         <h4>/views/profile.js</h4>
                         <pre><code><% } else { %>
     &lt;a href=&quot;/connect/facebook&quot; class=&quot;btn btn-primary&quot;&gt;Connect Facebook&lt;/a&gt;
 <% } %>
 </code></pre>
-
-
                         <h4>/app/routes.js</h4>
                         <pre><code>connectRouter.get('/facebook', passport.authorize('facebook', { scope: 'email' }));
 
@@ -973,8 +999,6 @@ connectRouter.get('/facebook/callback',
         successRedirect: '/profile',
         failureRedirect: '/'
     }));</code></pre>
-
-
                         <h4>/config/passport.js</h4>
                         <pre><code>else {
     // user already exists and is logged in, we have to link accounts
@@ -1001,8 +1025,6 @@ connectRouter.get('/facebook/callback',
                         <pre><code><% } else { %>
     &lt;a href=&quot;/connect/twitter&quot; class=&quot;btn btn-info&quot;&gt;Connect Twitter&lt;/a&gt;
 <% } %></code></pre>
-
-
                         <h4>/app/routes.js</h4>
                         <pre><code>//Twitter
 connectRouter.get('/twitter', passport.authorize('twitter', { scope: 'email' }));
@@ -1013,8 +1035,6 @@ connectRouter.get('/twitter/callback',
         successRedirect: '/profile',
         failureRedirect: '/'
     }));</code></pre>
-
-
                         <h4>/config/passport.js</h4>
                         <pre><code>else {
     // user already exists and is logged in, we have to link accounts
@@ -1036,14 +1056,10 @@ connectRouter.get('/twitter/callback',
                     </section>
                     <section>
                         <h3>Link Account Google</h3>
-
-
                         <h4>/views/profile.js</h4>
                         <pre><code><% } else { %>
     &lt;a href=&quot;/connect/google&quot; class=&quot;btn btn-danger&quot;&gt;Connect Google&lt;/a&gt;
 <% } %></code></pre>
-
-
                         <h4>/app/routes.js</h4>
                         <pre><code>//Google
 connectRouter.get('/google', passport.authorize('google', { scope: ['profile', 'email'] }));
@@ -1054,8 +1070,6 @@ connectRouter.get('/google/callback',
         successRedirect: '/profile',
         failureRedirect: '/'
     }));</code></pre>
-
-
                         <h4>/config/passport.js</h4>
                         <pre><code>else {
     // user already exists and is logged in, we have to link accounts
@@ -1071,8 +1085,6 @@ connectRouter.get('/google/callback',
         return done(null, user);
     });
 }</code></pre>
-
-
                     </section>
                     <section>
                         <h3>Unlink Accounts</h3>
@@ -1088,7 +1100,7 @@ unlinkRouter.get('/local', function(request, response) {
     });
 });
 </code></pre>
-<pre><code>//facebook
+                        <pre><code>//facebook
 unlinkRouter.get('/facebook', function(request, response) {
     var user            = request.user;
     user.facebook.token = undefined;
@@ -1097,7 +1109,7 @@ unlinkRouter.get('/facebook', function(request, response) {
     });
 });
 </code></pre>
-<pre><code>//twitter
+                        <pre><code>//twitter
 unlinkRouter.get('/twitter', function(request, response) {
     var user           = request.user;
     user.twitter.token = undefined;
@@ -1106,7 +1118,7 @@ unlinkRouter.get('/twitter', function(request, response) {
     });
 });
 </code></pre>
-<pre><code>//google
+                        <pre><code>//google
 unlinkRouter.get('/google', function(request, response) {
     var user          = request.user;
     user.google.token = undefined;
@@ -1116,11 +1128,21 @@ unlinkRouter.get('/google', function(request, response) {
 });
 
 </code></pre>
-<pre><code>app.use('/unlink', unlinkRouter);</code></pre>
+                        <pre><code>app.use('/unlink', unlinkRouter);</code></pre>
                     </section>
                     <section>
                         <h3>End</h3>
                     </section>
+                </div>
+            </section>
+
+            <section id="exercise">
+                <div class="container">
+                    <header class="major">
+                        <h3>Exercise</h3>
+                        <p>Last day only :P</p>
+                    </header>
+                    <p></p>
                 </div>
             </section>
         </div>
