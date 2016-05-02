@@ -89,14 +89,14 @@
                 <div class="container">
                     <h3>Writing your own app</h3>
                     <section>
-                        <h4>Setup</h4>
+                        <h3>Setup</h3>
                         <ul>
                             <li>npm init</li>
                             <li>npm install bcrypt-nodejs body-parser connect-flash cookie-parser ejs express express-session method-override mongoose morgan passport passport-local passport-facebook passport-google-oauth passport-local passport-twitter --save</li>
                         </ul>
                     </section>
                     <section>
-                        <h4>Configuration Files</h4>
+                        <h3>Configuration Files</h3>
                         <h5>/config/auth.js</h5>
                         <pre><code>
 // expose our config directly to our application using module.exports
@@ -118,7 +118,7 @@ module.exports = function(passport) {}
                         </code></pre>
                     </section>
                     <section>
-                        <h4>Index.js</h4>
+                        <h3>Index.js</h3>
                         <pre><code>
 //libraries required
 //express framework
@@ -185,12 +185,12 @@ app.listen(PORT, function() {
                         </code></pre>
                     </section>
                     <section>
-                        <h4>Starting Server</h4>
+                        <h3>Starting Server</h3>
                         <pre><code>$ mongod --dbpath ~/path/to/folder</code></pre>
                         <pre><code>$ node index  #nodemon index.js (npm install nodemon -g)</code></pre>
                     </section>
                     <section>
-                        <h4>Model</h4>
+                        <h3>Model</h3>
                         <h5>/app/models/user.js</h5>
                         <pre><code>
 
@@ -243,52 +243,301 @@ module.exports = mongoose.model('User', userSchema);
                         </code></pre>
                     </section>
                     <section>
-                        <h4>Views</h4>
+                        <h3>Views</h3>
+                        <h5>/views/header.ejs</h5>
+                        <pre><code>
+&lt;!Doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Passport Authentication&lt;/title&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;link rel=&quot;stylesheet&quot; href=&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;link rel=&quot;stylesheet&quot; href=&quot;//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { padding-top:80px; }
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;container&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;jumbotron text-center&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;&lt;span class=&quot;fa fa-lock&quot;&gt;&lt;/span&gt; Passport Authentication&lt;/h1&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+</code></pre>
+                        <h5>/views/footer.ejs</h5>
+                        <pre><code>&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+                        <h5>/views/index.ejs</h5>
+                        <pre><code>&lt;% include header %&gt;
+&lt;% include footer %&gt;
+</code></pre>
                     </section>
                     <section>
-                        <h4>Render</h4>
+                        <h3>Render</h3>
+                        <h5>/app/routes.js</h5>
+                        <pre><code>var express = require('express');
+var appRouter = express.Router();
+
+module.exports = function(app, passport) {
+    //normal Routes
+
+    //index
+    appRouter.get('/', function(request, response) {
+        response.render('index.ejs');
+    });
+
+    app.use('/', appRouter);
+
+};</code></pre>
                     </section>
                     <section>
-                        <h4>Local Signup</h4>
+                        <h3>Local Signup</h3>
+                        <h5>/views/index.ejs</h5>
+                        <pre><code>&lt;a href=&quot;/signup&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local Signup&lt;/a&gt;</code></pre>
+                        <h5>/app/routes.js</h5>
+                        <pre><code>appRouter.get('/signup', function(request, response) {
+        response.render('signup.ejs', { message: request.flash('signupMessage') });
+    });
+
+    appRouter.post('/signup', passport.authenticate('local-signup', {
+        // redirect to the secure profile section
+        successRedirect: '/profile',
+        // redirect back to the signup page if there is an error
+        failureRedirect: '/signup',
+        // allow flash messages
+        failureFlash: true
+    }))</code></pre>
+                        <h5>/views/signup.ejs</h5>
+                        <pre><code>&lt;% include header %&gt;
+
+&lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Signup&lt;/h1&gt;
+&lt;!-- LOGIN FORM --&gt;
+&lt;form action=&quot;/signup&quot; method=&quot;post&quot;&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+&lt;label&gt;Email&lt;/label&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;email&quot;&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-group&quot;&gt;
+&lt;label&gt;Password&lt;/label&gt;
+&lt;input type=&quot;password&quot; class=&quot;form-control&quot; name=&quot;password&quot;&gt;
+&lt;/div&gt;
+
+&lt;button type=&quot;submit&quot; class=&quot;btn btn-warning btn-lg&quot;&gt;Signup&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Already have an account? &lt;a href=&quot;/login&quot;&gt;Login&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Or go &lt;a href=&quot;/&quot;&gt;home&lt;/a&gt;.&lt;/p&gt;
+&lt;% include footer %&gt;</code></pre>
+                        <h5>/config/passport.js</h5>
+                        <pre><code>
+//Loading Strategies
+var LocalStrategy = require('passport-local').Strategy;
+
+// load up the user model
+var User = require('../app/models/user');
+
+// load the auth config
+var configAuth = require('./auth');
+
+module.exports = function(passport) {
+
+
+    // used to serialize the user for the session
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
+
+    // used to deserialize the user
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+            done(err, user);
+        });
+    });
+
+
+passport.use('local-signup', new LocalStrategy({
+            // by default, local strategy uses username and password, we will override with email
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+        },
+        function(request, email, password, done) {
+            if (email)
+                email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
+
+            // asynchronous
+            process.nextTick(function() {
+                // if the user is not already logged in:
+                if (!request.user) {
+                    User.findOne({ 'local.email': email }, function(err, user) {
+                        // if there are any errors, return the error
+                        if (err) {
+                            return done(err);
+                        }
+
+                        // check to see if theres already a user with that email
+                        if (user) {
+                            // return console.log('That email is already taken.');
+                            return done(null, false, request.flash('signupMessage', 'That email is already taken.'));
+                        } else {
+
+                            // create the user
+                            var newUser = new User();
+
+                            newUser.local.email = email;
+                            newUser.local.password = newUser.generateHash(password);
+
+                            newUser.save(function(err) {
+                                if (err) {
+                                    return done(err);
+                                }
+
+                                return done(null, newUser);
+                            });
+                        }
+
+                    });
+                    // if the user is logged in but has no local account...
+                } else {
+                    // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
+                    return done(null, request.user);
+                }
+
+            });
+
+        }));
+};</code></pre>
+                        <h5>/app/routes.js</h5>
+                        <pre><code>
+appRouter.get('/', function(request, response) {
+    response.render('index.ejs');
+});</code></pre>
                     </section>
                     <section>
-                        <h4>Local Login</h4>
+                        <h3>Local Login</h3>
+                        <h5>/views/index.ejs</h5>
+                        <pre><code>&lt;a href=&quot;/login&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local Login&lt;/a&gt;</code></pre>
+                        <h4>/views/login.ejs</h4>
+                        <pre><code>
+&lt;% include header %&gt;
+&lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Login&lt;/h1&gt;
+&lt;% if (message.length &gt; 0) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;alert alert-danger&quot;&gt;&lt;%= message %&gt;&lt;/div&gt;
+&lt;% } %&gt;
+
+&lt;!-- LOGIN FORM --&gt;
+&lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;form-group&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Email&lt;/label&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;email&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;form-group&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Password&lt;/label&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;password&quot; class=&quot;form-control&quot; name=&quot;password&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type=&quot;submit&quot; class=&quot;btn btn-warning btn-lg&quot;&gt;Login&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Need an account? &lt;a href=&quot;/signup&quot;&gt;Signup&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Or go &lt;a href=&quot;/&quot;&gt;home&lt;/a&gt;.&lt;/p&gt;
+&lt;% include footer %&gt;</code></pre>
+                        <h4>/app/routes.js</h4>
+                        <pre><code>appRouter.get('/login', function(request, response) {
+    response.render('login.ejs', { message: request.flash('loginMessage') });
+});
+
+//process login form
+appRouter.post('/login', passport.authenticate('local-login', {
+    // redirect to the secure profile section
+    successRedirect: '/profile',
+    // redirect back to the signup page if there is an error
+    failureRedirect: '/login',
+    // allow flash messages
+    failureFlash: true
+}));
+</code></pre>
+
+
+<h4>/config/passport.js</h4>
+<pre><code>
+//Local login
+passport.use('local-login', new LocalStrategy({
+        // by default, local strategy uses username and password, we will override with email
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+    },
+    function(request, email, password, done) {
+        if (email) {
+            email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
+        }
+
+        // asynchronous
+        process.nextTick(function() {
+            User.findOne({ 'local.email': email }, function(err, user) {
+                // if there are any errors, return the error
+                if (err)
+                    return done(err);
+
+                // no user found
+                if (!user){
+                    // return console.log('No user found.');
+                    return done(null, false, request.flash('loginMessage', 'No user found.'));
+                }
+
+                // invalid password
+                if (!user.validPassword(password)){
+                    return done(null, false, request.flash('loginMessage', 'Invalid password.'));
+                    // return console.log('Invalid password');
+                }
+
+                // all is well, return user
+                else
+                    return done(null, user);
+            });
+        });
+    }));</code></pre>
                     </section>
                     <section>
-                        <h4>Profile</h4>
+                        <h3>Profile</h3>
                     </section>
                     <section>
-                        <h4>Logout</h4>
+                        <h3>Logout</h3>
                     </section>
                     <section>
-                        <h4>Facebook</h4>
+                        <h3>Facebook</h3>
                     </section>
                     <section>
-                        <h4>Twitter</h4>
+                        <h3>Twitter</h3>
                     </section>
                     <section>
-                        <h4>Google</h4>
+                        <h3>Google</h3>
                     </section>
                     <section>
-                        <h4>Link Accounts</h4>
+                        <h3>Link Accounts</h3>
                     </section>
                     <section>
-                        <h4>Local</h4>
+                        <h3>Local</h3>
                     </section>
                     <section>
-                        <h4>Facebook</h4>
+                        <h3>Facebook</h3>
                     </section>
                     <section>
-                        <h4>Twitter</h4>
+                        <h3>Twitter</h3>
                     </section>
                     <section>
-                        <h4>Google</h4>
+                        <h3>Google</h3>
                     </section>
                     <section>
-                        <h4>Unlink Accounts</h4>
+                        <h3>Unlink Accounts</h3>
                     </section>
                     <section>
-                        <h4>End</h4>
+                        <h3>End</h3>
                     </section>
                 </div>
             </section>
