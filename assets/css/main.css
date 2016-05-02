@@ -3059,3 +3059,9 @@
 			}
 
 	}
+
+	#writing-app section{
+		padding-bottom: 50px;
+		border-bottom: 10px solid #4ACAA8;
+		margin-bottom: 100px;
+	}

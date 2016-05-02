@@ -149,22 +149,22 @@
                     </section>
                     <section>
                         <h3>Configuration Files</h3>
-                        <h5>/config/auth.js</h5>
+                        <h4>/config/auth.js</h4>
                         <pre><code>
 // expose our config directly to our application using module.exports
 module.exports = {};
 						</code></pre>
-                        <h5>/config/database.js</h5>
+                        <h4>/config/database.js</h4>
                         <pre><code>
 module.exports = {
 	'url': 'mongodb://localhost/node-passport'
 }
 						</code></pre>
-                        <h5>/config/passport.js</h5>
+                        <h4>/config/passport.js</h4>
                         <pre><code>
 module.exports = function(passport) {}
 						</code></pre>
-                        <h5>/app/routes.js</h5>
+                        <h4>/app/routes.js</h4>
                         <pre><code>
 module.exports = function(passport) {}
                         </code></pre>
@@ -218,7 +218,6 @@ app.use(session({ secret: 'avenuecode-passport-training', resave: true, saveUnin
 //saveUninitialized - Forces a session that is "uninitialized" to be saved to the store.
 //https://www.npmjs.com/package/express-session
 
-
 //passport setup
 app.use(passport.initialize());
 app.use(passport.session());
@@ -243,7 +242,7 @@ app.listen(PORT, function() {
                     </section>
                     <section>
                         <h3>Model</h3>
-                        <h5>/app/models/user.js</h5>
+                        <h4>/app/models/user.js</h4>
                         <pre><code>
 
 
@@ -296,7 +295,7 @@ module.exports = mongoose.model('User', userSchema);
                     </section>
                     <section>
                         <h3>Views</h3>
-                        <h5>/views/header.ejs</h5>
+                        <h4>/views/header.ejs</h4>
                         <pre><code>
 &lt;!Doctype html&gt;
 &lt;html&gt;
@@ -314,19 +313,19 @@ module.exports = mongoose.model('User', userSchema);
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;&lt;span class=&quot;fa fa-lock&quot;&gt;&lt;/span&gt; Passport Authentication&lt;/h1&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
 </code></pre>
-                        <h5>/views/footer.ejs</h5>
+                        <h4>/views/footer.ejs</h4>
                         <pre><code>&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-                        <h5>/views/index.ejs</h5>
+                        <h4>/views/index.ejs</h4>
                         <pre><code>&lt;% include header %&gt;
 &lt;% include footer %&gt;
 </code></pre>
                     </section>
                     <section>
                         <h3>Render</h3>
-                        <h5>/app/routes.js</h5>
+                        <h4>/app/routes.js</h4>
                         <pre><code>var express = require('express');
 var appRouter = express.Router();
 
@@ -344,9 +343,9 @@ module.exports = function(app, passport) {
                     </section>
                     <section>
                         <h3>Local Signup</h3>
-                        <h5>/views/index.ejs</h5>
+                        <h4>/views/index.ejs</h4>
                         <pre><code>&lt;a href=&quot;/signup&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local Signup&lt;/a&gt;</code></pre>
-                        <h5>/app/routes.js</h5>
+                        <h4>/app/routes.js</h4>
                         <pre><code>appRouter.get('/signup', function(request, response) {
         response.render('signup.ejs', { message: request.flash('signupMessage') });
     });
@@ -359,7 +358,7 @@ module.exports = function(app, passport) {
         // allow flash messages
         failureFlash: true
     }))</code></pre>
-                        <h5>/views/signup.ejs</h5>
+                        <h4>/views/signup.ejs</h4>
                         <pre><code>&lt;% include header %&gt;
 
 &lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Signup&lt;/h1&gt;
@@ -382,7 +381,7 @@ module.exports = function(app, passport) {
 &lt;p&gt;Already have an account? &lt;a href=&quot;/login&quot;&gt;Login&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Or go &lt;a href=&quot;/&quot;&gt;home&lt;/a&gt;.&lt;/p&gt;
 &lt;% include footer %&gt;</code></pre>
-                        <h5>/config/passport.js</h5>
+                        <h4>/config/passport.js</h4>
                         <pre><code>
 //Loading Strategies
 var LocalStrategy = require('passport-local').Strategy;
@@ -461,7 +460,7 @@ passport.use('local-signup', new LocalStrategy({
 
         }));
 };</code></pre>
-                        <h5>/app/routes.js</h5>
+                        <h4>/app/routes.js</h4>
                         <pre><code>
 appRouter.get('/', function(request, response) {
     response.render('index.ejs');
@@ -469,7 +468,7 @@ appRouter.get('/', function(request, response) {
                     </section>
                     <section>
                         <h3>Local Login</h3>
-                        <h5>/views/index.ejs</h5>
+                        <h4>/views/index.ejs</h4>
                         <pre><code>&lt;a href=&quot;/login&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local Login&lt;/a&gt;</code></pre>
                         <h4>/views/login.ejs</h4>
                         <pre><code>
@@ -513,10 +512,8 @@ appRouter.post('/login', passport.authenticate('local-login', {
     failureFlash: true
 }));
 </code></pre>
-
-
-<h4>/config/passport.js</h4>
-<pre><code>
+                        <h4>/config/passport.js</h4>
+                        <pre><code>
 //Local login
 passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
@@ -557,36 +554,499 @@ passport.use('local-login', new LocalStrategy({
                     </section>
                     <section>
                         <h3>Profile</h3>
+                        <h4>/views/profile.ejs</h4>
+                        <pre><code>&lt;% include header %&gt;
+&lt;div class=&quot;page-header text-center&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;&lt;span class=&quot;fa fa-anchor&quot;&gt;&lt;/span&gt; Profile Page&lt;/h1&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- LOCAL INFORMATION --&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-sm-6&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local&lt;/h3&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% if (user.local.email) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;id&lt;/strong&gt;: &lt;%= user._id %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;email&lt;/strong&gt;: &lt;%= user.local.email %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;password&lt;/strong&gt;: &lt;%= user.local.password %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% } %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&lt;% include footer %&gt;</code></pre>
+                        <h4>/app/routes.js</h4>
+                        <pre><code>appRouter.get('/profile', isLoggedIn, function(request, response) {
+	response.render('profile.ejs', {
+	    user: request.user
+	});
+});
+
+//...
+}
+//middleware that will verify whether user is logged in
+var isLoggedIn = function(request, response, next) {
+    if (request.isAuthenticated()) {
+        return next();
+    }
+    response.redirect('/');
+}
+</code></pre>
                     </section>
                     <section>
                         <h3>Logout</h3>
+
+                        <h4>/views/profile.ejs</h4>
+                        <pre><code>&lt;a href=&quot;/logout&quot; class=&quot;btn btn-default btn-sm&quot;&gt;Logout&lt;/a&gt;</code></pre>
+
+                        <h4>/app/routes.js</h4>
+                        <pre><code>appRouter.get('/logout', function(request, response) {
+    request.logout();
+    response.redirect('/');
+});</code>
                     </section>
                     <section>
                         <h3>Facebook</h3>
+                        <h4>/views/home.ejs</h4>
+<pre><code>&lt;a href=&quot;/auth/facebook&quot; class=&quot;btn btn-primary&quot;&gt;&lt;span class=&quot;fa fa-facebook&quot;&gt;&lt;/span&gt; Facebook&lt;/a&gt;</code></pre>
+							
+						<a href="https://developers.facebook.com/">https://developers.facebook.com/</a><br /><br />
+
+						<h4>/config/auth.js</h4>
+						<pre><code>'facebookAuth': {
+    'clientID': '1675914896001421',
+    'clientSecret': '7fe0217711792f908161a1efb4711842',
+    'callbackURL': 'http://localhost:8080/auth/facebook/callback'
+}</code></pre>
+
+<h4>/app/routes.js</h4>
+<pre><code>var authRouter = express.Router();
+
+module.exports ...
+//facebook
+//scopes: https://developers.facebook.com/docs/facebook-login/permissions
+authRouter.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
+
+authRouter.get('/facebook/callback', passport.authenticate('facebook', {
+    successRedirect: '/profile',
+    failureRedirect: '/'
+}));
+app.use('/auth', authRouter);</code></pre>
+
+<h4>/app/routes.js</h4>
+<pre><code>var FacebookStrategy = require('passport-facebook').Strategy;</code></pre>
+<pre><code>//facebook
+passport.use(new FacebookStrategy({
+        clientID: configAuth.facebookAuth.clientID,
+        clientSecret: configAuth.facebookAuth.clientSecret,
+        callbackURL: configAuth.facebookAuth.callbackURL,
+        profileFields: ['id', 'name', 'email'],
+        passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+    },
+    function(request, token, refreshToken, profile, done) {
+        // asynchronous
+        process.nextTick(function() {
+            // check if the user is already logged in
+            if (!request.user) {
+                User.findOne({ 'facebook.id': profile.id }, function(err, user) {
+                    if (err) {
+                        return done(err);
+                    }
+                    if (user) {
+                        // if there is a user id already but no token (user was linked at one point and then removed)
+                        if (!user.facebook.token) {
+                            user.facebook.token = token;
+                            user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+                            user.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                            user.save(function(err) {
+                                if (err) {
+                                    return done(err);
+                                }
+                                return done(null, user);
+                            });
+                        }
+                        return done(null, user); // user found, return that user
+                    } else {
+                        // if there is no user, create them
+                        var newUser = new User();
+                        newUser.facebook.id = profile.id;
+                        newUser.facebook.token = token;
+                        newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+                        newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                        newUser.save(function(err) {
+                            if (err) {
+                                return done(err);
+                            }
+                            return done(null, newUser);
+                        });
+                    }
+                });
+            }
+        });
+    }));</code></pre>
+
+<h4>views/profile.ejs</h4>
+    <pre><code>&lt;!-- FACEBOOK INFORMATION --&gt;
+&lt;div class=&quot;col-sm-6&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3 class=&quot;text-primary&quot;&gt;&lt;span class=&quot;fa fa-facebook&quot;&gt;&lt;/span&gt; Facebook&lt;/h3&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- check if the user has this token (is the user authenticated with this social account) --&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% if (user.facebook.token) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;id&lt;/strong&gt;: &lt;%= user.facebook.id %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;token&lt;/strong&gt;: &lt;%= user.facebook.token %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;email&lt;/strong&gt;: &lt;%= user.facebook.email %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;name&lt;/strong&gt;: &lt;%= user.facebook.name %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% } %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
                     </section>
                     <section>
                         <h3>Twitter</h3>
+                        <h4>/views/index.ejs</h4>
+                        <pre><code>&lt;a href=&quot;/auth/twitter&quot; class=&quot;btn btn-info&quot;&gt;&lt;span class=&quot;fa fa-twitter&quot;&gt;&lt;/span&gt; Twitter&lt;/a&gt;</code></pre>
+
+                        <h4>/config/auth.js</h4>
+                        <pre><code>//https://dev.twitter.com/
+'twitterAuth': {
+    'consumerKey': 'CJWOXklHh2iJLdX8OeXBatd7G',
+    'consumerSecret': 'ZdoOupziT1PIJykk6iPLMM3ud8yBlgg3Wxp7GVMU4UAMvHKqU3',
+    'callbackURL': 'http://localhost:8080/auth/twitter/callback'
+},</code></pre>
+                        
+
+                        <h4>/app/routes.js</h4>
+                        <pre><code>//twitter
+authRouter.get('/twitter', passport.authenticate('twitter', { scope: 'email' }));
+
+authRouter.get('/twitter/callback', passport.authenticate('twitter', {
+    successRedirect: '/profile',
+    failureRedirect: '/'
+}));</code></pre>
+
+
+                        <h4>/config/passport.js</h4>
+                        <pre><code>var TwitterStrategy = require('passport-twitter').Strategy;</code></pre>
+                        <pre><code>//twitter
+passport.use(new TwitterStrategy({
+        consumerKey: configAuth.twitterAuth.consumerKey,
+        consumerSecret: configAuth.twitterAuth.consumerSecret,
+        callbackURL: configAuth.twitterAuth.callbackURL,
+        passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+    },
+    function(request, token, tokenSecret, profile, done) {
+        // asynchronous
+        process.nextTick(function() {
+            // check if the user is already logged in
+            if (!request.user) {
+                User.findOne({ 'twitter.id': profile.id }, function(err, user) {
+                    if (err) {
+                        return done(err);
+                    }
+                    if (user) {
+                        // if there is a user id already but no token (user was linked at one point and then removed)
+                        if (!user.twitter.token) {
+                            user.twitter.token = token;
+                            user.twitter.username = profile.username;
+                            user.twitter.displayName = profile.displayName;
+                            user.save(function(err) {
+                                if (err) {
+                                    return done(err);
+                                }
+                                return done(null, user);
+                            });
+                        }
+                        return done(null, user); // user found, return that user
+                    } else {
+                        // if there is no user, create them
+                        var newUser = new User();
+                        newUser.twitter.id = profile.id;
+                        newUser.twitter.token = token;
+                        newUser.twitter.username = profile.username;
+                        newUser.twitter.displayName = profile.displayName;
+                        newUser.save(function(err) {
+                            if (err) {
+                                return done(err);
+                            }
+                            return done(null, newUser);
+                        });
+                    }
+                });
+            } 
+        });
+    }));</code></pre>
+
+    <h4>/views/profile.ejs</h4>
+    <pre><code>&lt;div class=&quot;row&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- TWITTER INFORMATION --&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-sm-6&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3 class=&quot;text-info&quot;&gt;&lt;span class=&quot;fa fa-twitter&quot;&gt;&lt;/span&gt; Twitter&lt;/h3&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% if (user.twitter.token) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;id&lt;/strong&gt;: &lt;%= user.twitter.id %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;token&lt;/strong&gt;: &lt;%= user.twitter.token %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;display name&lt;/strong&gt;: &lt;%= user.twitter.displayName %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;username&lt;/strong&gt;: &lt;%= user.twitter.username %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% } %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
                     </section>
                     <section>
                         <h3>Google</h3>
+                        <h4>/views/index.ejs</h4>
+                        <pre><code>&lt;a href=&quot;/auth/google&quot; class=&quot;btn btn-danger&quot;&gt;&lt;span class=&quot;fa fa-google-plus&quot;&gt;&lt;/span&gt; Google+&lt;/a&gt;</code></pre>
+
+                        
+                        <h4>/config/auth.js</h4>
+                        <pre><code>//console.developer.google.com or https://console.cloud.google.com
+'googleAuth': {
+    'clientID': '87668141240-tiqv5uie7i0oe8nq2tlrr10qu6jkd1pa.apps.googleusercontent.com',
+    'clientSecret': 'r8wDnKBQfnAP9LvmZG4cJQ87',
+    'callbackURL': 'http://localhost:8080/auth/google/callback'
+}</code></pre>
+
+                        
+                        <h4>/app/routes.js</h4>
+                        <pre><code>//google
+authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+authRouter.get('/google/callback', passport.authenticate('google', {
+    successRedirect: '/profile',
+    failureRedirect: '/'
+}));</code></pre>
+
+                        
+                        <h4>/config/passport.js</h4>
+                        <pre><code>var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;</code></pre>
+                        
+                        <pre><code>//Google
+passport.use(new GoogleStrategy({
+    clientID        : configAuth.googleAuth.clientID,
+    clientSecret    : configAuth.googleAuth.clientSecret,
+    callbackURL     : configAuth.googleAuth.callbackURL,
+    passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+},
+function(request, token, refreshToken, profile, done) {
+    // asynchronous
+    process.nextTick(function() {
+        // check if the user is already logged in
+        if (!request.user) {
+            User.findOne({ 'google.id' : profile.id }, function(err, user) {
+                if (err)
+                    return done(err);
+                if (user) {
+                    // if there is a user id already but no token (user was linked at one point and then removed)
+                    if (!user.google.token) {
+                        user.google.token = token;
+                        user.google.name  = profile.displayName;
+                        user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                        user.save(function(err) {
+                            if (err){
+                                return done(err);
+                            }
+                            return done(null, user);
+                        });
+                    }
+                    return done(null, user);
+                } else {
+                    var newUser          = new User();
+                    newUser.google.id    = profile.id;
+                    newUser.google.token = token;
+                    newUser.google.name  = profile.displayName;
+                    newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                    newUser.save(function(err) {
+                        if (err){
+                            return done(err);
+                        }
+                        return done(null, newUser);
+                    });
+                }
+            });
+        }
+    });
+}));</code></pre>
+
+
+
+                        <h4>/views/profile.js</h4>
+                        <pre><code>&lt;!-- GOOGLE INFORMATION --&gt;
+&lt;div class=&quot;col-sm-6&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h3 class=&quot;text-danger&quot;&gt;&lt;span class=&quot;fa fa-google-plus&quot;&gt;&lt;/span&gt; Google+&lt;/h3&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% if (user.google.token) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;id&lt;/strong&gt;: &lt;%= user.google.id %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;token&lt;/strong&gt;: &lt;%= user.google.token %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;email&lt;/strong&gt;: &lt;%= user.google.email %&gt;&lt;br&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt;name&lt;/strong&gt;: &lt;%= user.google.name %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;% }%&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </section>
+                    
+
+
+                    <section>
+                        <h3>Link Account Local</h3>
+                        <h4>/views/profile.js</h4>
+                        <pre><code><% } else { %>
+    &lt;a href=&quot;/connect/local&quot; class=&quot;btn btn-default&quot;&gt;Connect Local&lt;/a&gt;
+<% } %></code></pre>
+
+
+                        <h4>/app/routes.js</h4>
+                        <pre><code>var connectRouter = express.Router();</code></pre>
+
+                        <pre><code>//local
+connectRouter.get('/local', function(request, response) {
+    response.render('connect-local.ejs', { message: request.flash('loginMessage') });
+});
+connectRouter.post('/local', passport.authenticate('local-signup', {
+    successRedirect: '/profile', // redirect to the secure profile section
+    failureRedirect: '/connect/local', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+}));
+
+app.use('/connect', connectRouter);
+</code></pre>
+
+
+                        <h4>/config/passport.js</h4>
+                        <pre><code>else if (!request.user.local.email) {
+    //let's check if the email used to connect a local account is being used by another user
+    User.findOne({ 'local.email': email }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+
+        if (user) {
+            // return console.log('That email is already taken.');
+            return done(null, false, request.flash('loginMessage', 'That email is already taken.'));
+            // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
+        } else {
+            var user = request.user;
+            user.local.email = email;
+            user.local.password = user.generateHash(password);
+            user.save(function(err) {
+                if (err) {
+                    return done(err);
+                }
+                return done(null, user);
+            });
+        }
+    });
+}</code></pre>
+
+
+                        <h4>/views/connect-local.ejs</h4>
+                        <pre><code>
+&lt;% include header %&gt;
+&lt;h1&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Add Local Account&lt;/h1&gt;
+&lt;% if (message.length &gt; 0) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;alert alert-danger&quot;&gt;&lt;%= message %&gt;&lt;/div&gt;
+&lt;% } %&gt;
+&lt;!-- LOGIN FORM --&gt;
+&lt;form action=&quot;/connect/local&quot; method=&quot;post&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;form-group&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Email&lt;/label&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;email&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;form-group&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;Password&lt;/label&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type=&quot;password&quot; class=&quot;form-control&quot; name=&quot;password&quot;&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;button type=&quot;submit&quot; class=&quot;btn btn-warning btn-lg&quot;&gt;Add Local&lt;/button&gt;
+&lt;/form&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&quot;/profile&quot;&gt;Go back to profile&lt;/a&gt;&lt;/p&gt;
+&lt;% include footer %&gt;</code></pre>
+
                     </section>
                     <section>
-                        <h3>Link Accounts</h3>
+                        <h3>Link Account Facebook</h3>
+
+                        <h4>/views/profile.js</h4>
+                        <pre><code><% } else { %>
+    &lt;a href=&quot;/connect/facebook&quot; class=&quot;btn btn-primary&quot;&gt;Connect Facebook&lt;/a&gt;
+<% } %>
+</code></pre>
+
+
+                        <h4>/app/routes.js</h4>
+                        <pre><code>connectRouter.get('/facebook', passport.authorize('facebook', { scope: 'email' }));
+
+connectRouter.get('/facebook/callback',
+    passport.authorize('facebook', {
+        successRedirect: '/profile',
+        failureRedirect: '/'
+    }));</code></pre>
+
+
+                        <h4>/config/passport.js</h4>
+                        <pre><code>else {
+    // user already exists and is logged in, we have to link accounts
+    var user = request.user; // pull the user out of the session
+
+    user.facebook.id = profile.id;
+    user.facebook.token = token;
+    user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+    user.facebook.email = (profile.emails[0].value || '').toLowerCase();
+
+    user.save(function(err) {
+        if (err) {
+            return done(err);
+        }
+
+        return done(null, user);
+    });
+
+}</code></pre>
                     </section>
                     <section>
-                        <h3>Local</h3>
+                        <h3>Link Account Twitter</h3>
+                        <h4>/views/profile.js</h4>
+                        <pre><code><% } else { %>
+    &lt;a href=&quot;/connect/twitter&quot; class=&quot;btn btn-info&quot;&gt;Connect Twitter&lt;/a&gt;
+<% } %></code></pre>
+
+
+                        <h4>/app/routes.js</h4>
+                        <pre><code>//Twitter
+connectRouter.get('/twitter', passport.authorize('twitter', { scope: 'email' }));
+
+// handle the callback after twitter has authorized the user
+connectRouter.get('/twitter/callback',
+    passport.authorize('twitter', {
+        successRedirect: '/profile',
+        failureRedirect: '/'
+    }));</code></pre>
+
+
+                        <h4></h4>
+                        <pre><code></code></pre>
                     </section>
                     <section>
-                        <h3>Facebook</h3>
-                    </section>
-                    <section>
-                        <h3>Twitter</h3>
-                    </section>
-                    <section>
-                        <h3>Google</h3>
+                        <h3>Link Account Google</h3>
+
+
+                        <h4>/views/profile.js</h4>
+                        <pre><code><% } else { %>
+    &lt;a href=&quot;/connect/google&quot; class=&quot;btn btn-danger&quot;&gt;Connect Google&lt;/a&gt;
+<% } %></code></pre>
+
+
+                        <h4></h4>
+                        <pre><code></code></pre>
                     </section>
                     <section>
                         <h3>Unlink Accounts</h3>
+                        <h4></h4>
+                        <pre><code></code></pre>
                     </section>
                     <section>
                         <h3>End</h3>
