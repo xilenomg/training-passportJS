@@ -193,14 +193,12 @@ var session = require('express-session');
 
 var PORT = process.env.PORT || 8080;
 
-
 //database
 var databaseConfig = require('./config/database.js');
 mongoose.connect(databaseConfig.url);
 
 //passport
 require('./config/passport')(passport);
-
 
 //APP use
 app.use(morgan('dev'));
@@ -231,9 +229,7 @@ require('./app/routes.js')(app, passport);
 //listen to port
 app.listen(PORT, function() {
     console.log("Open your browser at http://localhost:" + PORT);
-});
-
-                        </code></pre>
+});</code></pre>
                     </section>
                     <section>
                         <h3>Starting Server</h3>
@@ -243,16 +239,12 @@ app.listen(PORT, function() {
                     <section>
                         <h3>Model</h3>
                         <h4>/app/models/user.js</h4>
-                        <pre><code>
-
-
-// load the things we need
+                        <pre><code>// load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
-
     local            : {
         email        : String,
         password     : String
@@ -275,7 +267,6 @@ var userSchema = mongoose.Schema({
         email        : String,
         name         : String
     }
-
 });
 
 // generating a hash
@@ -314,7 +305,7 @@ module.exports = mongoose.model('User', userSchema);
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
 </code></pre>
                         <h4>/views/footer.ejs</h4>
-                        <pre><code>&lt;/div&gt;
+                        <pre><code>    &lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -338,7 +329,6 @@ module.exports = function(app, passport) {
     });
 
     app.use('/', appRouter);
-
 };</code></pre>
                     </section>
                     <section>
@@ -357,7 +347,7 @@ module.exports = function(app, passport) {
         failureRedirect: '/signup',
         // allow flash messages
         failureFlash: true
-    }))</code></pre>
+    }));</code></pre>
                         <h4>/views/signup.ejs</h4>
                         <pre><code>&lt;% include header %&gt;
 
@@ -385,16 +375,12 @@ module.exports = function(app, passport) {
                         <pre><code>
 //Loading Strategies
 var LocalStrategy = require('passport-local').Strategy;
-
 // load up the user model
 var User = require('../app/models/user');
-
 // load the auth config
 var configAuth = require('./auth');
 
 module.exports = function(passport) {
-
-
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -406,7 +392,6 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
-
 
 passport.use('local-signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
@@ -513,8 +498,7 @@ appRouter.post('/login', passport.authenticate('local-login', {
 }));
 </code></pre>
                         <h4>/config/passport.js</h4>
-                        <pre><code>
-//Local login
+                        <pre><code>//Local login
 passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
         usernameField: 'email',
@@ -582,9 +566,9 @@ passport.use('local-login', new LocalStrategy({
 	});
 });
 
-//...
-}
-//middleware that will verify whether user is logged in
+</code></pre>
+
+<pre><code>//middleware that will verify whether user is logged in
 var isLoggedIn = function(request, response, next) {
     if (request.isAuthenticated()) {
         return next();
@@ -610,7 +594,7 @@ var isLoggedIn = function(request, response, next) {
                         <h4>/views/home.ejs</h4>
 <pre><code>&lt;a href=&quot;/auth/facebook&quot; class=&quot;btn btn-primary&quot;&gt;&lt;span class=&quot;fa fa-facebook&quot;&gt;&lt;/span&gt; Facebook&lt;/a&gt;</code></pre>
 							
-						<a href="https://developers.facebook.com/">https://developers.facebook.com/</a><br /><br />
+						<a target="_blank" href="https://developers.facebook.com/">https://developers.facebook.com/</a><br /><br />
 
 						<h4>/config/auth.js</h4>
 						<pre><code>'facebookAuth': {
@@ -707,6 +691,8 @@ passport.use(new FacebookStrategy({
                         <h4>/views/index.ejs</h4>
                         <pre><code>&lt;a href=&quot;/auth/twitter&quot; class=&quot;btn btn-info&quot;&gt;&lt;span class=&quot;fa fa-twitter&quot;&gt;&lt;/span&gt; Twitter&lt;/a&gt;</code></pre>
 
+                        <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a><br /><br />
+
                         <h4>/config/auth.js</h4>
                         <pre><code>//https://dev.twitter.com/
 'twitterAuth': {
@@ -800,7 +786,9 @@ passport.use(new TwitterStrategy({
                         <h4>/views/index.ejs</h4>
                         <pre><code>&lt;a href=&quot;/auth/google&quot; class=&quot;btn btn-danger&quot;&gt;&lt;span class=&quot;fa fa-google-plus&quot;&gt;&lt;/span&gt; Google+&lt;/a&gt;</code></pre>
 
-                        
+                          <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a><br /><br />
+
+
                         <h4>/config/auth.js</h4>
                         <pre><code>//console.developer.google.com or https://console.cloud.google.com
 'googleAuth': {
@@ -1027,8 +1015,24 @@ connectRouter.get('/twitter/callback',
     }));</code></pre>
 
 
-                        <h4></h4>
-                        <pre><code></code></pre>
+                        <h4>/config/passport.js</h4>
+                        <pre><code>else {
+    // user already exists and is logged in, we have to link accounts
+    var user = request.user; // pull the user out of the session
+
+    user.twitter.id = profile.id;
+    user.twitter.token = token;
+    user.twitter.username = profile.username;
+    user.twitter.displayName = profile.displayName;
+
+    user.save(function(err) {
+        if (err) {
+            return done(err);
+        }
+
+        return done(null, user);
+    });
+}</code></pre>
                     </section>
                     <section>
                         <h3>Link Account Google</h3>
@@ -1040,13 +1044,79 @@ connectRouter.get('/twitter/callback',
 <% } %></code></pre>
 
 
-                        <h4></h4>
-                        <pre><code></code></pre>
+                        <h4>/app/routes.js</h4>
+                        <pre><code>//Google
+connectRouter.get('/google', passport.authorize('google', { scope: ['profile', 'email'] }));
+
+// the callback after google has authorized the user
+connectRouter.get('/google/callback',
+    passport.authorize('google', {
+        successRedirect: '/profile',
+        failureRedirect: '/'
+    }));</code></pre>
+
+
+                        <h4>/config/passport.js</h4>
+                        <pre><code>else {
+    // user already exists and is logged in, we have to link accounts
+    var user               = request.user; // pull the user out of the session
+    user.google.id    = profile.id;
+    user.google.token = token;
+    user.google.name  = profile.displayName;
+    user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+    user.save(function(err) {
+        if (err){
+            return done(err);
+        }
+        return done(null, user);
+    });
+}</code></pre>
+
+
                     </section>
                     <section>
                         <h3>Unlink Accounts</h3>
-                        <h4></h4>
-                        <pre><code></code></pre>
+                        <h4>/config/routes.js</h4>
+                        <pre><code>var unlinkRouter = express.Router();</code></pre>
+                        <pre><code>//local
+unlinkRouter.get('/local', function(request, response) {
+    var user            = request.user;
+    user.local.email    = undefined;
+    user.local.password = undefined;
+    user.save(function(err) {
+        response.redirect('/profile');
+    });
+});
+</code></pre>
+<pre><code>//facebook
+unlinkRouter.get('/facebook', function(request, response) {
+    var user            = request.user;
+    user.facebook.token = undefined;
+    user.save(function(err) {
+        response.redirect('/profile');
+    });
+});
+</code></pre>
+<pre><code>//twitter
+unlinkRouter.get('/twitter', function(request, response) {
+    var user           = request.user;
+    user.twitter.token = undefined;
+    user.save(function(err) {
+       response.redirect('/profile');
+    });
+});
+</code></pre>
+<pre><code>//google
+unlinkRouter.get('/google', function(request, response) {
+    var user          = request.user;
+    user.google.token = undefined;
+    user.save(function(err) {
+       response.redirect('/profile');
+    });
+});
+
+</code></pre>
+<pre><code>app.use('/unlink', unlinkRouter);</code></pre>
                     </section>
                     <section>
                         <h3>End</h3>
