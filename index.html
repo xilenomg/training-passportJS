@@ -59,6 +59,24 @@
             <section id="passportjs">
                 <div class="container">
                     <h3>PassportJS</h3>
+                    <section>
+                        <h4>Overview</h4>
+                        <p>Passport is authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application.</p>
+                        <p>It is designed to serve a singular purpose: authenticate requests. In modern web applications, authentication can take a variety of forms. Traditionally, users log in by providing a username and password. With the rise of social networking, single sign-on using an OAuth provider such as Facebook or Twitter has become a popular authentication method. Services that expose an API often require token-based credentials to protect access.</p>
+                        <p>Passport recognizes that each application has unique authentication requirements. Authentication mechanisms, known as <strong>strategies</strong>, are packaged as individual modules. Applications can choose which strategies to employ, without creating unnecessary dependencies.</p>
+                    </section>
+                    <section>
+                        <h4>Strategies</h4>
+                        <p>Passport uses what are termed strategies to authenticate requests. Strategies range from verifying a username and password, delegated authentication using OAuth or federated authentication using OpenID. Before asking Passport to authenticate a request, the strategy (or strategies) used by an application must be configured.</p>
+                        <p>In this training, we will use four of the most common strategies</p>
+                        <ul>
+                            <li>Local</li>
+                            <li>Facebook</li>
+                            <li>Google</li>
+                            <li>Twitter</li>
+                        </ul>
+                        <p>Facebook, Google and Twitter implement the OAuth standard for authorization, which we will take a look in the next section.</p>
+                    </section>
                     <p></p>
                 </div>
             </section>
@@ -66,10 +84,44 @@
             <section id="oauth">
                 <div class="container">
                     <h3>OAuth</h3>
-                    <p></p>
+                    <section>
+                        <h4>Definition</h4>
+                        <p>An open protocol to allow secure authorization in a simple standard method from web, mobile and desktop applications.</p>
+                        <p>Also known as Authorization Framework</p>
+                    </section>
+                    <section>
+                        <h4>Roles</h4>
+                        <ul>
+                            <li>Resource owner</li>
+                            <li>Client</li>
+                            <li>Resource server</li>
+                            <li>Authorization server</li>
+                        </ul>
+                        <ol>
+                            <li><strong>Resource owner:</strong> User<p>The resource owner is the user who authorizes an application to access their account. The application's access to the user's account is limited to the "scope" of the authorization granted (e.g. read or write access).</p></li>
+                            <li><strong>Client:</strong> Application<p>The client is the application that wants to access the user's account. Before it may do so, it must be authorized by the user, and the authorization must be validated by the API.</p></li>
+                            <li><strong>Resource server/Authorization server:</strong> API<p>The resource server hosts the protected user accounts, and the authorization server verifies the identity of the user then issues access tokens to the application. From an application developer's point of view, a service's API fulfills both the resource and authorization server roles.</p></li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h4>Flow</h4>
+                        <p>Now that you have an idea of what the OAuth roles are, let's look at a diagram of how they generally interact with each other:</p>
+                        <p><img src="https://assets.digitalocean.com/articles/oauth/abstract_flow.png"></p>
+                        <p>Here is a more detailed explanation of the steps in the diagram:</p>
+                        <ol>
+                            <li>The <em>application</em> requests authorization to access service resources from the <em>user</em></li>
+                            <li>If the <em>user</em> authorized the request, the <em>application</em> receives an authorization grant</li>
+                            <li>The <em>application</em> requests an access token from the <em>authorization server</em> (API) by presenting authentication of its own identity, and the authorization grant</li>
+                            <li>If the application identity is authenticated and the authorization grant is valid, the <em>authorization server</em> (API) issues an access token to the application. Authorization is complete.</li>
+                            <li>The <em>application</em> requests the resource from the <em>resource server</em> (API) and presents the access token for authentication</li>
+                            <li>If the access token is valid, the <em>resource server</em> (API) serves the resource to the <em>application</em></li>
+                        </ol>
+                        <p>The actual flow of this process will differ depending on the authorization grant type in use, but this is the general idea. We will explore different grant types in a later section.</p>
+                    </section>
                 </div>
             </section>
-            <!-- Three -->
+
+            <!-- Four -->
             <section id="demo">
                 <div class="container">
                     <h3>Demo</h3>
@@ -84,7 +136,7 @@
                     </video>
                 </div>
             </section>
-            <!-- Four -->
+            <!-- Five -->
             <section id="writing-app">
                 <div class="container">
                     <h3>Writing your own app</h3>
