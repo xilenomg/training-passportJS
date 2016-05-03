@@ -7,7 +7,7 @@
 <html>
 
 <head>
-    <title>Read Only by HTML5 UP</title>
+    <title>Node + PassportJS</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -394,21 +394,26 @@ module.exports = function(app, passport) {
                     <section>
                         <h3>Local Signup</h3>
                         <h4>/views/index.ejs</h4>
-                        <pre><code>&lt;a href=&quot;/signup&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local Signup&lt;/a&gt;</code></pre>
+                        <p>Adding local signup button on index.ejs</p>
+                        <pre><code>&lt;a href=&quot;/signup&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt;Local Signup&lt;/a&gt;</code></pre>
                         <h4>/app/routes.js</h4>
+                        <p>Render <i>signup.ejs</i> for route <i>/signup</i></p>
                         <pre><code>appRouter.get('/signup', function(request, response) {
-        response.render('signup.ejs', { message: request.flash('signupMessage') });
-    });
+    response.render('signup.ejs', { message: request.flash('signupMessage') });
+});</code></pre>
 
-    appRouter.post('/signup', passport.authenticate('local-signup', {
-        // redirect to the secure profile section
-        successRedirect: '/profile',
-        // redirect back to the signup page if there is an error
-        failureRedirect: '/signup',
-        // allow flash messages
-        failureFlash: true
-    }));</code></pre>
+
+<p>Redirect POST requests to <i>/signup</i> to <i>Passport-local</i> configuration</p>
+<pre><code>appRouter.post('/signup', passport.authenticate('local-signup', {
+    // redirect to the secure profile section
+    successRedirect: '/profile',
+    // redirect back to the signup page if there is an error
+    failureRedirect: '/signup',
+    // allow flash messages
+    failureFlash: true
+}));</code></pre>
                         <h4>/views/signup.ejs</h4>
+                        <p>Sign Up Form view</p>
                         <pre><code>&lt;% include header %&gt;
 
 &lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Signup&lt;/h1&gt;
@@ -432,27 +437,33 @@ module.exports = function(app, passport) {
 &lt;p&gt;Or go &lt;a href=&quot;/&quot;&gt;home&lt;/a&gt;.&lt;/p&gt;
 &lt;% include footer %&gt;</code></pre>
                         <h4>/config/passport.js</h4>
-                        <pre><code>
-//Loading Strategies
-var LocalStrategy = require('passport-local').Strategy;
+                        <p>Configuring Local Passport</p>
+                        <p>//Loading Strategies</p>
+                        <pre><code>var LocalStrategy = require('passport-local').Strategy;
 // load up the user model
 var User = require('../app/models/user');
 // load the auth config
-var configAuth = require('./auth');
+var configAuth = require('./auth');</code></pre>
 
-module.exports = function(passport) {
-    // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
+<p>//Starting module</p>
+<pre><code>module.exports = function(passport) {</code></pre>
+
+
+<p>// used to serialize the user for the session **REQUIRED</p>
+<pre><code>passport.serializeUser(function(user, done) {
         done(null, user.id);
-    });
+    });</code></pre>
 
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
+<p>// used to deserialize the user **REQUIRED</p>    
+<pre><code>passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
     });
+</code></pre>
 
+<p>//Setting up local signup on passport</p>
+<pre><code>
 passport.use('local-signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
             usernameField: 'email',
@@ -460,8 +471,9 @@ passport.use('local-signup', new LocalStrategy({
             passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         },
         function(request, email, password, done) {
-            if (email)
+            if (email){
                 email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
+            }
 
             // asynchronous
             process.nextTick(function() {
@@ -503,21 +515,25 @@ passport.use('local-signup', new LocalStrategy({
 
             });
 
-        }));
-};</code></pre>
-                        <h4>/app/routes.js</h4>
-                        <pre><code>
-appRouter.get('/', function(request, response) {
-    response.render('index.ejs');
-});</code></pre>
+        }));</code></pre>
+
+
+<p>//close module.exports</p>
+<pre><code>};</code></pre>
+
                     </section>
                     <section>
                         <h3>Local Login</h3>
                         <h4>/views/index.ejs</h4>
+                        <p>Adding local signin button on index.ejs</p>
                         <pre><code>&lt;a href=&quot;/login&quot; class=&quot;btn btn-default&quot;&gt;&lt;span class=&quot;fa fa-user&quot;&gt;&lt;/span&gt; Local Login&lt;/a&gt;</code></pre>
+
+
+
+
                         <h4>/views/login.ejs</h4>
-                        <pre><code>
-&lt;% include header %&gt;
+                        <p>Login Form View</p>
+                        <pre><code>&lt;% include header %&gt;
 &lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Login&lt;/h1&gt;
 &lt;% if (message.length &gt; 0) { %&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;alert alert-danger&quot;&gt;&lt;%= message %&gt;&lt;/div&gt;
@@ -542,13 +558,21 @@ appRouter.get('/', function(request, response) {
 &lt;p&gt;Need an account? &lt;a href=&quot;/signup&quot;&gt;Signup&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Or go &lt;a href=&quot;/&quot;&gt;home&lt;/a&gt;.&lt;/p&gt;
 &lt;% include footer %&gt;</code></pre>
+
+
+
+
+
+
+
                         <h4>/app/routes.js</h4>
+                        <p>Route <i>/login</i> to <i>login.ejs</i> form</p>
                         <pre><code>appRouter.get('/login', function(request, response) {
     response.render('login.ejs', { message: request.flash('loginMessage') });
-});
+});</code></pre>
 
-//process login form
-appRouter.post('/login', passport.authenticate('local-login', {
+<p>//process login form</p>
+<pre><code>appRouter.post('/login', passport.authenticate('local-login', {
     // redirect to the secure profile section
     successRedirect: '/profile',
     // redirect back to the signup page if there is an error
@@ -557,7 +581,15 @@ appRouter.post('/login', passport.authenticate('local-login', {
     failureFlash: true
 }));
 </code></pre>
+
+
+
+
+
+
+
                         <h4>/config/passport.js</h4>
+                        <p>Setting up local signin on passport</p>
                         <pre><code>//Local login
 passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
@@ -599,6 +631,7 @@ passport.use('local-login', new LocalStrategy({
                     <section>
                         <h3>Profile</h3>
                         <h4>/views/profile.ejs</h4>
+                        <p>Profile page where we will show all users info once he is logged in</p>
                         <pre><code>&lt;% include header %&gt;
 &lt;div class=&quot;page-header text-center&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;&lt;span class=&quot;fa fa-anchor&quot;&gt;&lt;/span&gt; Profile Page&lt;/h1&gt;
@@ -619,61 +652,97 @@ passport.use('local-login', new LocalStrategy({
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
 &lt;/div&gt;
 &lt;% include footer %&gt;</code></pre>
+
+
+
+
+
+
+
                         <h4>/app/routes.js</h4>
+                        <p>Route /profile to profile.ejs. This page will show after user signin</p>
                         <pre><code>appRouter.get('/profile', isLoggedIn, function(request, response) {
 	response.render('profile.ejs', {
 	    user: request.user
 	});
-});
+});</code></pre>
+    <p>//middleware that will verify whether user is logged in. It will be added outside module.exports</p>
+                        
 
-</code></pre>
-                        <pre><code>//middleware that will verify whether user is logged in
-var isLoggedIn = function(request, response, next) {
+    <pre><code>var isLoggedIn = function(request, response, next) {
     if (request.isAuthenticated()) {
         return next();
     }
     response.redirect('/');
-}
-</code></pre>
+}</code></pre>
                     </section>
+
+
                     <section>
                         <h3>Logout</h3>
                         <h4>/views/profile.ejs</h4>
+                        <p>Add Logout button on profile.ejs</p>
                         <pre><code>&lt;a href=&quot;/logout&quot; class=&quot;btn btn-default btn-sm&quot;&gt;Logout&lt;/a&gt;</code></pre>
+
                         <h4>/app/routes.js</h4>
+                        <p>Close user session</p>
                         <pre><code>appRouter.get('/logout', function(request, response) {
     request.logout();
     response.redirect('/');
 });</code>
                     </section>
+
+
+
+
+
+
                     <section>
                         <h3>Facebook</h3>
-                        <h4>/views/home.ejs</h4>
+                        <h4>/views/index.ejs</h4>
+                        <p>Add Facebook button on index.ejs</p>
 <pre><code>&lt;a href=&quot;/auth/facebook&quot; class=&quot;btn btn-primary&quot;&gt;&lt;span class=&quot;fa fa-facebook&quot;&gt;&lt;/span&gt; Facebook&lt;/a&gt;</code></pre>
-                        <a target="_blank" href="https://developers.facebook.com/">https://developers.facebook.com/</a>
-                        <br />
-                        <br />
                         <h4>/config/auth.js</h4>
+                        <p>Get your keys creating an app at <a target="_blank" href="https://developers.facebook.com/">https://developers.facebook.com/</a></p>
+                        
+
+
                         <pre><code>'facebookAuth': {
     'clientID': '1675914896001421',
     'clientSecret': '7fe0217711792f908161a1efb4711842',
     'callbackURL': 'http://localhost:8080/auth/facebook/callback'
 }</code></pre>
+
+
+
+
+
+
                         <h4>/app/routes.js</h4>
-                        <pre><code>var authRouter = express.Router();
+                        <p>Creating now ROUTER that will respond for all requests <i>/auth/*</i></p>
+                        <pre><code>var authRouter = express.Router();</code></pre>
 
-module.exports ...
-//facebook
-//scopes: https://developers.facebook.com/docs/facebook-login/permissions
-authRouter.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));
+<p>Redirecting FB button click to Facebook API</p>
+<p>//scopes: https://developers.facebook.com/docs/facebook-login/permissions</p>
+<pre><code>//facebook
+authRouter.get('/facebook', passport.authenticate('facebook', { scope: 'email' }));</code></pre>
 
-authRouter.get('/facebook/callback', passport.authenticate('facebook', {
+
+<p>//Redirecting request to /auth/facebook/callback to passport-facebook-Strategy</p>
+<pre><code>authRouter.get('/facebook/callback', passport.authenticate('facebook', {
     successRedirect: '/profile',
     failureRedirect: '/'
-}));
-app.use('/auth', authRouter);</code></pre>
-                        <h4>/app/routes.js</h4>
+}));</code></pre>
+
+
+<p>//Set app to use authRouter for /auth/* requests</p>
+<pre><code>app.use('/auth', authRouter);</code></pre>
+                        <h4>/config/passport.js</h4>
+                        
+                        <p>Adding Facebook strategy</p>
                         <pre><code>var FacebookStrategy = require('passport-facebook').Strategy;</code></pre>
+                        
+                        <p>//Setting up Facebook Strategy</p>
                         <pre><code>//facebook
 passport.use(new FacebookStrategy({
         clientID: configAuth.facebookAuth.clientID,
@@ -723,7 +792,10 @@ passport.use(new FacebookStrategy({
             }
         });
     }));</code></pre>
+
+
                         <h4>views/profile.ejs</h4>
+                        <p>Adding Facebook User Data into profile.ejs</p>
                         <pre><code>&lt;!-- FACEBOOK INFORMATION --&gt;
 &lt;div class=&quot;col-sm-6&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;well&quot;&gt;
