@@ -414,9 +414,16 @@ module.exports = function(app, passport) {
 }));</code></pre>
                         <h4>/views/signup.ejs</h4>
                         <p>Sign Up Form view</p>
-                        <pre><code>&lt;% include header %&gt;
+                        <pre><code&lt;% include header %&gt;
 
 &lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Signup&lt;/h1&gt;
+
+
+&lt;% if(message.length &gt; 0) { %&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;alert alert-danger&quot;&gt;&lt;%= message %&gt;&lt;/div&gt;
+&lt;%&nbsp;&nbsp;} %&gt;
+
+
 &lt;!-- LOGIN FORM --&gt;
 &lt;form action=&quot;/signup&quot; method=&quot;post&quot;&gt;
 &lt;div class=&quot;form-group&quot;&gt;
@@ -535,6 +542,7 @@ passport.use('local-signup', new LocalStrategy({
                         <p>Login Form View</p>
                         <pre><code>&lt;% include header %&gt;
 &lt;h1&gt;&lt;span class=&quot;fa fa-sign-in&quot;&gt;&lt;/span&gt; Login&lt;/h1&gt;
+
 &lt;% if (message.length &gt; 0) { %&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;alert alert-danger&quot;&gt;&lt;%= message %&gt;&lt;/div&gt;
 &lt;% } %&gt;
@@ -815,10 +823,9 @@ passport.use(new FacebookStrategy({
                     <section>
                         <h3>Twitter</h3>
                         <h4>/views/index.ejs</h4>
+                        <p>Let's insert Twitter Button on home</p>
                         <pre><code>&lt;a href=&quot;/auth/twitter&quot; class=&quot;btn btn-info&quot;&gt;&lt;span class=&quot;fa fa-twitter&quot;&gt;&lt;/span&gt; Twitter&lt;/a&gt;</code></pre>
-                        <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a>
-                        <br />
-                        <br />
+                        <p>Use this link to create your app <a target="_blank" href="https://dev.twitter.com/">https://dev.twitter.com/</a> on Twitter. As we are using same URL you can use my keys</p>
                         <h4>/config/auth.js</h4>
                         <pre><code>//https://dev.twitter.com/
 'twitterAuth': {
@@ -826,7 +833,11 @@ passport.use(new FacebookStrategy({
     'consumerSecret': 'ZdoOupziT1PIJykk6iPLMM3ud8yBlgg3Wxp7GVMU4UAMvHKqU3',
     'callbackURL': 'http://localhost:8080/auth/twitter/callback'
 },</code></pre>
+
+
+
                         <h4>/app/routes.js</h4>
+                        <p>Add keys on auth.js file</p>
                         <pre><code>//twitter
 authRouter.get('/twitter', passport.authenticate('twitter', { scope: 'email' }));
 
@@ -835,7 +846,9 @@ authRouter.get('/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/'
 }));</code></pre>
                         <h4>/config/passport.js</h4>
+                        <p>Add Strategy on passport.js</p>
                         <pre><code>var TwitterStrategy = require('passport-twitter').Strategy;</code></pre>
+                        <p>Passport Strategy  for Twitter</p>
                         <pre><code>//twitter
 passport.use(new TwitterStrategy({
         consumerKey: configAuth.twitterAuth.consumerKey,
@@ -885,6 +898,7 @@ passport.use(new TwitterStrategy({
         });
     }));</code></pre>
                         <h4>/views/profile.ejs</h4>
+                        <p>Add Twitter data to profile.ejs</p>
                         <pre><code>&lt;div class=&quot;row&quot;&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- TWITTER INFORMATION --&gt;
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;col-sm-6&quot;&gt;
