@@ -1174,8 +1174,20 @@ connectRouter.get('/google/callback',
                     </section>
                     <section>
                         <h3>Unlink Accounts</h3>
+                        <h4>/views/profile.ejs</h4>
+                        <p>Local</p>
+
+                        <pre><code><a href="/unlink/local" class="btn btn-default">Unlink Local</a></code></pre>
+                        <p>Facebook</p>
+                        <pre><code><a href="/unlink/facebook" class="btn btn-primary">Unlink Facebook</a></code></pre>
+                        <p>Twitter</p>
+                        <pre><code><a href="/unlink/twitter" class="btn btn-info">Unlink Twitter</a></code></pre>
+                        <p>Google</p>
+                        <pre><code><a href="/unlink/google" class="btn btn-danger">Unlink Google</a></code></pre>
                         <h4>/config/routes.js</h4>
                         <pre><code>var unlinkRouter = express.Router();</code></pre>
+                        <p>Local</p>
+
                         <pre><code>//local
 unlinkRouter.get('/local', function(request, response) {
     var user            = request.user;
@@ -1186,6 +1198,7 @@ unlinkRouter.get('/local', function(request, response) {
     });
 });
 </code></pre>
+
                         <pre><code>//facebook
 unlinkRouter.get('/facebook', function(request, response) {
     var user            = request.user;
@@ -1195,6 +1208,7 @@ unlinkRouter.get('/facebook', function(request, response) {
     });
 });
 </code></pre>
+
                         <pre><code>//twitter
 unlinkRouter.get('/twitter', function(request, response) {
     var user           = request.user;
@@ -1204,6 +1218,7 @@ unlinkRouter.get('/twitter', function(request, response) {
     });
 });
 </code></pre>
+
                         <pre><code>//google
 unlinkRouter.get('/google', function(request, response) {
     var user          = request.user;
